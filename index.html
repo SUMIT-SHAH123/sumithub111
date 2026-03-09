@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SumitHub · turn ideas into reality</title>
+  <!-- Tailwind + Lucide + Fonts + EmailJS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+   <link rel="icon" type="image/x-icon" href="https://sumithub.com/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    
+
+  <style>
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    .font-display { font-family: 'Space Grotesk', sans-serif; }
+    .gradient-text {
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(226, 232, 240, 0.4);
+    }
+    .dark .glass {
+      background: rgba(15, 23, 42, 0.7);
+      border-color: rgba(51, 65, 85, 0.5);
+    }
+    body.dark { background: #0b1120; color: #e2e8f0; }
+    .dark .bg-slate-50 { background-color: #1e293b; }
+    .dark .text-slate-600 { color: #94a3b8; }
+    .dark .border-slate-200 { border-color: #334155; }
+    .page { display: none; }
+    .page.active { display: block; }
+    .animate-spin { animation: spin 1s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="fixed w-full z-50 transition-all duration-300 glass py-3 shadow-lg" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center">
+        <a href="#" class="text-2xl font-display font-bold gradient-text" id="home-logo">SumitHub</a>
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#" data-page="home" class="nav-link text-sm font-medium transition-colors text-slate-600 dark:text-slate-300 hover:text-brand-500">Home</a>
+          <a href="#" data-page="about" class="nav-link text-sm font-medium transition-colors text-slate-600 dark:text-slate-300 hover:text-brand-500">About</a>
+          <a href="#" data-page="services" class="nav-link text-sm font-medium transition-colors text-slate-600 dark:text-slate-300 hover:text-brand-500">Services</a>
+          <a href="#" data-page="projects" class="nav-link text-sm font-medium transition-colors text-slate-600 dark:text-slate-300 hover:text-brand-500">Projects</a>
+          <a href="#" data-page="contact" class="nav-link text-sm font-medium transition-colors text-slate-600 dark:text-slate-300 hover:text-brand-500">Contact</a>
+          <button id="darkModeToggleDesktop" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+            <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
+            <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+          </button>
+          <a href="#" data-page="contact" class="bg-[#2563eb] hover:bg-[#1d4ed8] text-white px-5 py-2 rounded-full text-sm font-semibold transition-all shadow-md hover:shadow-lg active:scale-95">Let's Build</a>
+        </div>
+        <div class="md:hidden flex items-center space-x-4">
+          <button id="darkModeToggleMobile" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+            <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
+            <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+          </button>
+          <button id="menuBtn" class="text-slate-600 dark:text-slate-300">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden glass border-t border-slate-200 dark:border-slate-800">
+      <div class="px-4 pt-2 pb-6 space-y-1">
+        <a href="#" data-page="home" class="mobile-link block px-3 py-4 text-base font-medium rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">Home</a>
+        <a href="#" data-page="about" class="mobile-link block px-3 py-4 text-base font-medium rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">About</a>
+        <a href="#" data-page="services" class="mobile-link block px-3 py-4 text-base font-medium rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">Services</a>
+        <a href="#" data-page="projects" class="mobile-link block px-3 py-4 text-base font-medium rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">Projects</a>
+        <a href="#" data-page="contact" class="mobile-link block px-3 py-4 text-base font-medium rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">Contact</a>
+        <div class="pt-4">
+          <a href="#" data-page="contact" class="block w-full text-center bg-[#2563eb] text-white px-5 py-3 rounded-xl text-base font-semibold">Let's Build Something</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20"></div>
+
+  <!-- HOME PAGE -->
+  <div id="home" class="page active">
+    <!-- Hero -->
+    <section class="relative pt-10 pb-20 lg:pt-20 lg:pb-32 overflow-hidden">
+      <div class="absolute inset-0 -z-10">
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-5xl md:text-7xl font-display font-extrabold mb-6 leading-tight">Turning Entrepreneurs <br> <span class="gradient-text">Ideas Into Reality</span></h1>
+        <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">I love bringing your vision to life! From first sketch to final launch, I build websites and apps that help your business grow.</p>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+          <a href="#" data-page="contact" class="w-full sm:w-auto bg-[#2563eb] hover:bg-[#1d4ed8] text-white px-8 py-4 rounded-full text-lg font-bold transition-all shadow-xl shadow-blue-500/20 hover:shadow-blue-500/40 active:scale-95">Let's Build Something</a>
+          <a href="#" data-page="projects" class="w-full sm:w-auto glass hover:bg-slate-50 dark:hover:bg-slate-800 px-8 py-4 rounded-full text-lg font-bold transition-all active:scale-95 flex items-center justify-center gap-2">See My Work <i data-lucide="arrow-right" class="w-5 h-5"></i></a>
+        </div>
+      </div>
+    </section>
+    <!-- Stats -->
+    <section class="py-16 bg-slate-50 dark:bg-slate-900/50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="text-center"><p class="text-4xl md:text-5xl font-display font-bold text-[#2563eb] mb-2">50+</p><p class="text-slate-600 dark:text-slate-400 font-medium">Projects Delivered</p></div>
+          <div class="text-center"><p class="text-4xl md:text-5xl font-display font-bold text-[#2563eb] mb-2">40+</p><p class="text-slate-600 dark:text-slate-400 font-medium">Happy Clients</p></div>
+          <div class="text-center"><p class="text-4xl md:text-5xl font-display font-bold text-[#2563eb] mb-2">3+</p><p class="text-slate-600 dark:text-slate-400 font-medium">Years Experience</p></div>
+          <div class="text-center"><p class="text-4xl md:text-5xl font-display font-bold text-[#2563eb] mb-2">100%</p><p class="text-slate-600 dark:text-slate-400 font-medium">Client Satisfaction</p></div>
+        </div>
+      </div>
+    </section>
+    <!-- Workflow -->
+    <section class="py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16"><h2 class="text-3xl md:text-5xl font-display font-bold mb-4">How I Work 🛠️</h2><p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">My proven process ensures your project is delivered on time, within budget, and to the highest quality.</p></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1"><div class="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="zap" class="w-7 h-7 text-amber-500"></i></div><h3 class="text-xl font-bold mb-3">Discovery & Planning</h3><p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">I start by listening to your goals and challenges, then create a strategy to make your idea shine.</p></div>
+          <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1"><div class="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="shield" class="w-7 h-7 text-blue-500"></i></div><h3 class="text-xl font-bold mb-3">Design & Prototyping</h3><p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">I craft beautiful, user-friendly designs you can preview and interact with before development starts.</p></div>
+          <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1"><div class="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="code" class="w-7 h-7 text-emerald-500"></i></div><h3 class="text-xl font-bold mb-3">Development & Testing</h3><p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">My code is clean, fast, and tested to make sure everything works perfectly on all devices.</p></div>
+          <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1"><div class="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="globe" class="w-7 h-7 text-indigo-500"></i></div><h3 class="text-xl font-bold mb-3">Launch & Support</h3><p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">I launch your project with confidence and stay by your side to keep it running smoothly.</p></div>
+        </div>
+      </div>
+    </section>
+    <!-- Tech -->
+    <section class="py-24 bg-slate-50 dark:bg-slate-900/50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"><h2 class="text-3xl md:text-5xl font-display font-bold mb-4">Tech I Love</h2><p class="text-slate-600 dark:text-slate-400 mb-12">I use modern, battle-tested tools.</p><div class="flex flex-wrap justify-center gap-8 opacity-60 grayscale hover:grayscale-0 transition-all"><span class="text-xl font-bold">React</span><span class="text-xl font-bold">Next.js</span><span class="text-xl font-bold">Node.js</span><span class="text-xl font-bold">TypeScript</span><span class="text-xl font-bold">Tailwind</span><span class="text-xl font-bold">AWS</span><span class="text-xl font-bold">Docker</span></div></div>
+    </section>
+  </div>
+
+  <!-- ABOUT PAGE - UPDATED WITH SUMIT SHAH AS FOUNDER -->
+  <div id="about" class="page pt-10 pb-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h1 class="text-5xl md:text-7xl font-display font-extrabold mb-6 leading-tight">About <span class="gradient-text">SumitHub</span></h1>
+        <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">SumitHub is a web development company founded by <span class="font-bold text-[#2563eb]">Sumit Shah</span>, a passionate full-stack developer based in Hetauda, Nepal. I specialize in turning entrepreneurs' ideas into reality through professional website and software development services.</p>
+      </div>
+
+      <!-- Founder Card -->
+      <div class="mb-20">
+        <div class="bg-gradient-to-br from-[#2563eb]/5 to-[#7c3aed]/5 rounded-3xl p-8 md:p-12 border border-slate-200 dark:border-slate-800">
+          <div class="flex flex-col md:flex-row items-center gap-10">
+            <div class="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl">
+              <img src="https://files.catbox.moe/nfmxqr.jpg" alt="Sumit Shah - Founder & Full Stack Developer" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 text-center md:text-left">
+              <h2 class="text-3xl md:text-4xl font-display font-bold mb-2">Sumit Shah</h2>
+              <p class="text-xl text-[#2563eb] font-semibold mb-4">Founder & Full-Stack Developer</p>
+              <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed mb-6">
+                Hi, I'm Sumit — the sole developer behind SumitHub. With over 3 years of experience in web development, I handle everything from UI/UX design to backend architecture, deployment, and maintenance. I believe in building fast, beautiful, and user-friendly solutions that help businesses grow.
+              </p>
+              <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                <span class="px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-full text-sm font-medium flex items-center gap-2"><i data-lucide="code" class="w-4 h-4 text-[#2563eb]"></i> Full-Stack</span>
+                <span class="px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-full text-sm font-medium flex items-center gap-2"><i data-lucide="smartphone" class="w-4 h-4 text-[#2563eb]"></i> Responsive Design</span>
+                <span class="px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-full text-sm font-medium flex items-center gap-2"><i data-lucide="zap" class="w-4 h-4 text-[#2563eb]"></i> Performance</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-24">
+        <div class="p-10 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl hover:shadow-2xl transition-all">
+          <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 mb-6">
+            <i data-lucide="target" class="w-7 h-7"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">My Mission</h3>
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">To empower businesses with cutting-edge digital solutions that drive growth and innovation. I believe in building long-term partnerships with my clients by delivering exceptional value and quality.</p>
+        </div>
+        <div class="p-10 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl hover:shadow-2xl transition-all">
+          <div class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 mb-6">
+            <i data-lucide="eye" class="w-7 h-7"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">My Vision</h3>
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">To be a trusted name in software development, known for quality, integrity, and a client-centric approach. I aim to set new standards through continuous learning and innovation.</p>
+        </div>
+      </div>
+
+      <!-- Solo Developer Stats -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-24">
+        <div class="text-center p-8 rounded-3xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 hover:shadow-lg transition-all">
+          <div class="w-12 h-12 bg-white dark:bg-slate-800 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+            <i data-lucide="calendar" class="w-5 h-5 text-[#2563eb]"></i>
+          </div>
+          <p class="text-3xl font-display font-bold text-[#2563eb] mb-1">2023</p>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Founded</p>
+        </div>
+        <div class="text-center p-8 rounded-3xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 hover:shadow-lg transition-all">
+          <div class="w-12 h-12 bg-white dark:bg-slate-800 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+            <i data-lucide="user" class="w-5 h-5 text-emerald-500"></i>
+          </div>
+          <p class="text-3xl font-display font-bold text-[#2563eb] mb-1">1</p>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Dedicated Developer</p>
+        </div>
+        <div class="text-center p-8 rounded-3xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 hover:shadow-lg transition-all">
+          <div class="w-12 h-12 bg-white dark:bg-slate-800 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+            <i data-lucide="code" class="w-5 h-5 text-indigo-500"></i>
+          </div>
+          <p class="text-3xl font-display font-bold text-[#2563eb] mb-1">50+</p>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Projects Completed</p>
+        </div>
+        <div class="text-center p-8 rounded-3xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 hover:shadow-lg transition-all">
+          <div class="w-12 h-12 bg-white dark:bg-slate-800 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+            <i data-lucide="heart" class="w-5 h-5 text-amber-500"></i>
+          </div>
+          <p class="text-3xl font-display font-bold text-[#2563eb] mb-1">100%</p>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Client Satisfaction</p>
+        </div>
+      </div>
+
+      <!-- Skills Section -->
+      <div class="mb-20">
+        <h2 class="text-3xl font-display font-bold text-center mb-12">Technical <span class="gradient-text">Expertise</span></h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center hover:shadow-lg transition-all">
+            <i data-lucide="code" class="w-8 h-8 text-[#2563eb] mx-auto mb-3"></i>
+            <h4 class="font-bold">Frontend</h4>
+            <p class="text-xs text-slate-500">React, Next.js, Vue</p>
+          </div>
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center hover:shadow-lg transition-all">
+            <i data-lucide="server" class="w-8 h-8 text-[#2563eb] mx-auto mb-3"></i>
+            <h4 class="font-bold">Backend</h4>
+            <p class="text-xs text-slate-500">Node.js, Express, Python</p>
+          </div>
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center hover:shadow-lg transition-all">
+            <i data-lucide="database" class="w-8 h-8 text-[#2563eb] mx-auto mb-3"></i>
+            <h4 class="font-bold">Database</h4>
+            <p class="text-xs text-slate-500">MongoDB, PostgreSQL</p>
+          </div>
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center hover:shadow-lg transition-all">
+            <i data-lucide="cloud" class="w-8 h-8 text-[#2563eb] mx-auto mb-3"></i>
+            <h4 class="font-bold">DevOps</h4>
+            <p class="text-xs text-slate-500">AWS, Docker, Vercel</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES PAGE -->
+  <div id="services" class="page pt-10 pb-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16"><h1 class="text-5xl md:text-7xl font-display font-extrabold mb-6 leading-tight">Professional <br><span class="gradient-text">Services I Offer</span></h1><p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">I offer professional website development, software solutions, e‑commerce, SEO, and custom web applications.</p></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1"><div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="shield" class="w-7 h-7 text-blue-500"></i></div><h3 class="text-xl font-bold mb-3">UI/UX Design</h3><p class="text-slate-600 dark:text-slate-400 text-sm">Beautiful, user-friendly designs you can preview before development.</p></div>
+        <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1"><div class="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="cpu" class="w-7 h-7 text-indigo-500"></i></div><h3 class="text-xl font-bold mb-3">AI Integration</h3><p class="text-slate-600 dark:text-slate-400 text-sm">Leverage AI to automate tasks and gain deeper insights.</p></div>
+        <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1"><div class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="code" class="w-7 h-7 text-emerald-500"></i></div><h3 class="text-xl font-bold mb-3">Web Development</h3><p class="text-slate-600 dark:text-slate-400 text-sm">Clean, fast, tested code that works perfectly on all devices.</p></div>
+        <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1"><div class="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="search" class="w-7 h-7 text-amber-500"></i></div><h3 class="text-xl font-bold mb-3">SEO & Marketing</h3><p class="text-slate-600 dark:text-slate-400 text-sm">Optimize your online presence and reach your target audience.</p></div>
+        <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1"><div class="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="globe" class="w-7 h-7 text-purple-500"></i></div><h3 class="text-xl font-bold mb-3">Cloud & Hosting</h3><p class="text-slate-600 dark:text-slate-400 text-sm">Deploy globally with distributed infrastructure and CDN.</p></div>
+        <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1"><div class="w-14 h-14 bg-rose-500/10 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="zap" class="w-7 h-7 text-rose-500"></i></div><h3 class="text-xl font-bold mb-3">Custom Software</h3><p class="text-slate-600 dark:text-slate-400 text-sm">Tailored solutions to help your business grow and thrive.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS PAGE -->
+  <div id="projects" class="page pt-10 pb-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16"><h1 class="text-5xl md:text-7xl font-display font-extrabold mb-6 leading-tight">My <span class="gradient-text">Projects</span></h1><p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Showcasing my impact through digital innovation. Here is one of my featured works.</p></div>
+      <div class="flex justify-center"><div class="max-w-2xl w-full"><div class="group rounded-3xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-2xl transition-all"><div class="relative aspect-video overflow-hidden"><img src="https://files.catbox.moe/aote8x.png" alt="MDUS" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center"><a href="https://mdus.org.np/" target="_blank" class="px-6 py-3 rounded-full bg-white text-[#2563eb] font-bold flex items-center gap-2 hover:bg-blue-50">Visit Website <i data-lucide="external-link" class="w-4 h-4"></i></a></div></div><div class="p-8"><div><span class="text-xs font-bold text-[#2563eb] dark:text-blue-400 uppercase tracking-widest">Web Development</span><h3 class="text-2xl font-bold">Makwanpur Disabled Upliftment Society</h3></div><p class="text-slate-600 dark:text-slate-400 text-sm my-4">A comprehensive web platform for MDUS, dedicated to empowerment of persons with disabilities.</p><div class="flex flex-wrap gap-2 mb-6"><span class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-bold uppercase">React</span><span class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-bold uppercase">Tailwind</span><span class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-bold uppercase">Non-Profit</span></div><a href="https://mdus.org.np/" target="_blank" class="flex items-center gap-2 text-[#2563eb] dark:text-blue-400 font-bold text-sm hover:gap-3 transition-all">View Project <i data-lucide="chevron-right" class="w-4 h-4"></i></a></div></div></div></div>
+    </div>
+  </div>
+
+  <!-- CONTACT PAGE - FULLY WORKING WITH YOUR CREDENTIALS -->
+  <div id="contact" class="page pt-10 pb-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h1 class="text-5xl md:text-7xl font-display font-extrabold mb-6 leading-tight">Let's Create Your <br><span class="gradient-text">Next Big Idea</span></h1>
+        <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Ready to start your project? Fill out the form and I'll respond within 24 hours!</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- Contact Form -->
+        <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl">
+          <!-- Success Message (hidden by default) -->
+          <div id="successMessage" class="hidden flex-col items-center text-center py-12">
+            <div class="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-500 mb-6">
+              <i data-lucide="check-circle-2" class="w-12 h-12"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-2">Message Sent! 🎉</h3>
+            <p class="text-slate-600 dark:text-slate-400 mb-8">Thank you for reaching out. I'll get back to you soon.</p>
+            <button id="sendAnother" class="bg-[#2563eb] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#1d4ed8] transition-all">Send Another Message</button>
+          </div>
+
+          <!-- Contact Form -->
+          <form id="contactForm" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-bold mb-2">Full Name *</label>
+                <input type="text" id="name" name="name" required placeholder="John Doe" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500/50 outline-none">
+              </div>
+              <div>
+                <label class="block text-sm font-bold mb-2">Email Address *</label>
+                <input type="email" id="email" name="email" required placeholder="john@example.com" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500/50 outline-none">
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-bold mb-2">Subject</label>
+              <input type="text" id="subject" name="subject" placeholder="Project Inquiry" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500/50 outline-none">
+            </div>
+            <div>
+              <label class="block text-sm font-bold mb-2">Message *</label>
+              <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500/50 outline-none"></textarea>
+            </div>
+
+            <!-- Status messages -->
+            <div id="formStatus" class="text-sm text-center hidden"></div>
+
+            <button type="submit" id="submitBtn" class="w-full bg-[#2563eb] text-white py-4 rounded-xl font-bold hover:bg-[#1d4ed8] transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+              <span>Send Message</span> <i data-lucide="send" class="w-5 h-5"></i>
+            </button>
+          </form>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="space-y-12">
+          <div>
+            <h2 class="text-3xl font-display font-bold mb-6">Contact Information</h2>
+            <p class="text-slate-600 dark:text-slate-400 mb-8">I'm always open to new projects, collaborations, or just a friendly chat.</p>
+            <div class="space-y-6">
+              <div class="flex items-center gap-4"><div class="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500"><i data-lucide="mail" class="w-6 h-6"></i></div><div><p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Email</p><p class="text-lg font-bold">sumitshah27300@gmail.com</p></div></div>
+              <div class="flex items-center gap-4"><div class="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500"><i data-lucide="phone" class="w-6 h-6"></i></div><div><p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Call</p><p class="text-lg font-bold">+977-9734846255</p></div></div>
+              <div class="flex items-center gap-4"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-500"><i data-lucide="map-pin" class="w-6 h-6"></i></div><div><p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Visit</p><p class="text-lg font-bold">Hetauda, Nepal</p></div></div>
+            </div>
+          </div>
+          <div class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <h3 class="text-xl font-bold mb-4">Why work with me?</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-sm">Experienced full-stack developer, rigorous testing, tailored solutions. On‑time, within‑budget delivery with personalized attention.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+<footer class="pt-24 pb-12 bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Main Footer Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-16">
+      
+      <!-- Brand Column -->
+      <div class="space-y-4">
+        <a href="#" data-page="home" class="text-3xl font-display font-bold gradient-text inline-block">SumitHub</a>
+        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed max-w-xs">
+          Turning entrepreneurs' ideas into reality through innovative web solutions and digital experiences.
+        </p>
+        <div class="flex space-x-4 pt-4">
+          <a href="#" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-[#2563eb] hover:text-white transition-all duration-300">
+            <i data-lucide="twitter" class="w-5 h-5"></i>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-[#2563eb] hover:text-white transition-all duration-300">
+            <i data-lucide="github" class="w-5 h-5"></i>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-[#2563eb] hover:text-white transition-all duration-300">
+            <i data-lucide="linkedin" class="w-5 h-5"></i>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-[#2563eb] hover:text-white transition-all duration-300">
+            <i data-lucide="instagram" class="w-5 h-5"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links Column -->
+      <div>
+        <h4 class="text-lg font-bold mb-6 relative inline-block">
+          Quick Links
+          <span class="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-[#2563eb] to-[#7c3aed] rounded-full"></span>
+        </h4>
+        <ul class="space-y-3">
+          <li><a href="#" data-page="home" class="text-slate-600 dark:text-slate-400 hover:text-[#2563eb] dark:hover:text-[#2563eb] transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-4 h-4"></i>Home</a></li>
+          <li><a href="#" data-page="about" class="text-slate-600 dark:text-slate-400 hover:text-[#2563eb] dark:hover:text-[#2563eb] transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-4 h-4"></i>About Me</a></li>
+          <li><a href="#" data-page="services" class="text-slate-600 dark:text-slate-400 hover:text-[#2563eb] dark:hover:text-[#2563eb] transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-4 h-4"></i>Services</a></li>
+          <li><a href="#" data-page="projects" class="text-slate-600 dark:text-slate-400 hover:text-[#2563eb] dark:hover:text-[#2563eb] transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-4 h-4"></i>Projects</a></li>
+          <li><a href="#" data-page="contact" class="text-slate-600 dark:text-slate-400 hover:text-[#2563eb] dark:hover:text-[#2563eb] transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-4 h-4"></i>Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Services Column -->
+      <div>
+        <h4 class="text-lg font-bold mb-6 relative inline-block">
+          My Services
+          <span class="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-[#2563eb] to-[#7c3aed] rounded-full"></span>
+        </h4>
+        <ul class="space-y-3">
+          <li><a href="#" data-page="services" class="text-slate-600 dark:text-slate-400 hover:text-[#2563eb] dark:hover:text-[#2563eb] transition-colors flex items-center gap-2"><i data-lucide="circle" class="w-2 h-2 fill-current"></i>Web Development</a></li>
+          <li><a href="#" data-page="services" class="text-slate-600 dark:text-slate-400 hover:text-[#2563eb] dark:hover:text-[#2563eb] transition-colors flex items-center gap-2"><i data-lucide="circle" class="w-2 h-2 fill-current"></i>UI/UX Design</a></li>
+          <li><a href="#" data-page="services" class="text-slate-600 dark:text-slate-400 hover:text-[#2563eb] dark:hover:text-[#2563eb] transition-colors flex items-center gap-2"><i data-lucide="circle" class="w-2 h-2 fill-current"></i>AI Integration</a></li>
+          <li><a href="#" data-page="services" class="text-slate-600 dark:text-slate-400 hover:text-[#2563eb] dark:hover:text-[#2563eb] transition-colors flex items-center gap-2"><i data-lucide="circle" class="w-2 h-2 fill-current"></i>SEO & Marketing</a></li>
+          <li><a href="#" data-page="services" class="text-slate-600 dark:text-slate-400 hover:text-[#2563eb] dark:hover:text-[#2563eb] transition-colors flex items-center gap-2"><i data-lucide="circle" class="w-2 h-2 fill-current"></i>Cloud Solutions</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Column -->
+      <div>
+        <h4 class="text-lg font-bold mb-6 relative inline-block">
+          Get In Touch
+          <span class="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-[#2563eb] to-[#7c3aed] rounded-full"></span>
+        </h4>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3 text-slate-600 dark:text-slate-400">
+            <i data-lucide="map-pin" class="w-5 h-5 text-[#2563eb] flex-shrink-0 mt-0.5"></i>
+            <span>Hetauda, Makwanpur, Nepal</span>
+          </li>
+          <li class="flex items-center gap-3 text-slate-600 dark:text-slate-400">
+            <i data-lucide="phone" class="w-5 h-5 text-[#2563eb] flex-shrink-0"></i>
+            <span>+977-9734846255</span>
+          </li>
+          <li class="flex items-center gap-3 text-slate-600 dark:text-slate-400">
+            <i data-lucide="mail" class="w-5 h-5 text-[#2563eb] flex-shrink-0"></i>
+            <span>sumitshah27300@gmail.com</span>
+          </li>
+          <li class="flex items-center gap-3 text-slate-600 dark:text-slate-400">
+            <i data-lucide="clock" class="w-5 h-5 text-[#2563eb] flex-shrink-0"></i>
+            <span>Mon-Fri: 9AM - 6PM (NPT)</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Newsletter & Bottom Bar -->
+    <div class="pt-8 border-t border-slate-200 dark:border-slate-800">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <!-- Copyright -->
+        <p class="text-slate-500 dark:text-slate-500 text-sm order-2 md:order-1">
+          © 2026 SumitHub. All rights reserved. | Made with <i data-lucide="heart" class="w-4 h-4 inline text-rose-500 fill-current"></i> by Sumit Shah in Nepal
+        </p>
+
+        <!-- Trust Badges -->
+        <div class="flex gap-3 order-3">
+          <span class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-3 py-1 rounded-full">Secure</span>
+          <span class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-3 py-1 rounded-full">SSL</span>
+          <span class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-3 py-1 rounded-full">24/7 Support</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // ========== YOUR EMAILJS CREDENTIALS ==========
+    const PUBLIC_KEY = 'gYuvg_1uU9flTqn5L';     // Your Public Key
+    const SERVICE_ID = 'service_ujezkh9';       // Your Service ID
+    const TEMPLATE_ID = 'template_bl8itwd';     // Your Template ID
+
+    // Initialize EmailJS
+    emailjs.init(PUBLIC_KEY);
+
+    // Dark Mode
+    const html = document.documentElement;
+    const darkToggleDesktop = document.getElementById('darkModeToggleDesktop');
+    const darkToggleMobile = document.getElementById('darkModeToggleMobile');
+
+    function setDarkMode(enable) {
+      if (enable) { html.classList.add('dark'); document.body.classList.add('dark'); } 
+      else { html.classList.remove('dark'); document.body.classList.remove('dark'); }
+      lucide.createIcons();
+    }
+
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let isDark = localStorage.getItem('darkMode') === 'true' || (localStorage.getItem('darkMode') === null && prefersDark);
+    setDarkMode(isDark);
+
+    function toggleDark() { isDark = !isDark; localStorage.setItem('darkMode', isDark); setDarkMode(isDark); }
+    darkToggleDesktop.addEventListener('click', toggleDark);
+    darkToggleMobile.addEventListener('click', toggleDark);
+
+    // Page Navigation
+    const pages = document.querySelectorAll('.page');
+    function showPage(pageId) {
+      pages.forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.getElementById('mobileMenu').classList.add('hidden');
+    }
+
+    document.querySelectorAll('[data-page]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        showPage(el.dataset.page);
+      });
+    });
+
+    // Mobile Menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      const icon = menuBtn.querySelector('i');
+      icon.setAttribute('data-lucide', mobileMenu.classList.contains('hidden') ? 'menu' : 'x');
+      lucide.createIcons();
+    });
+
+    // ========== CONTACT FORM - FULLY WORKING ==========
+    const form = document.getElementById('contactForm');
+    const successDiv = document.getElementById('successMessage');
+    const formStatus = document.getElementById('formStatus');
+    const submitBtn = document.getElementById('submitBtn');
+    const sendAnotherBtn = document.getElementById('sendAnother');
+
+    // Hide success initially, show form
+    successDiv.classList.add('hidden');
+    form.classList.remove('hidden');
+
+    sendAnotherBtn.addEventListener('click', () => {
+      successDiv.classList.add('hidden');
+      form.classList.remove('hidden');
+      form.reset();
+    });
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Get form values
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const subject = document.getElementById('subject').value.trim() || 'New Project Inquiry';
+      const message = document.getElementById('message').value.trim();
+
+      // Validate
+      if (!name || !email || !message) {
+        formStatus.classList.remove('hidden');
+        formStatus.classList.add('text-rose-500');
+        formStatus.innerText = 'Please fill in all required fields.';
+        return;
+      }
+
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        formStatus.classList.remove('hidden');
+        formStatus.classList.add('text-rose-500');
+        formStatus.innerText = 'Please enter a valid email address.';
+        return;
+      }
+
+      formStatus.classList.add('hidden');
+
+      // Disable button, show loading
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Sending...</span> <i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>';
+      lucide.createIcons();
+
+      // Prepare template parameters - UPDATED to match your template variables
+      const templateParams = {
+        name: name,
+        email: email,
+        subject: subject,
+        message: message
+      };
+
+      // Send email via EmailJS
+      emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+        .then(function(response) {
+          console.log('SUCCESS!', response.status, response.text);
+          
+          // Show success message
+          form.classList.add('hidden');
+          successDiv.classList.remove('hidden');
+          lucide.createIcons();
+          
+          // Reset form
+          form.reset();
+        })
+        .catch(function(error) {
+          console.log('FAILED...', error);
+          
+          // Show error message
+          formStatus.classList.remove('hidden');
+          formStatus.classList.add('text-rose-500');
+          formStatus.innerText = 'Failed to send. Please try again or email me directly.';
+          
+          // Re-enable button
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Send Message</span> <i data-lucide="send" class="w-5 h-5"></i>';
+          lucide.createIcons();
+        });
+    });
+
+    // Show home page by default
+    showPage('home');
+  </script>
+</body>
+</html>
